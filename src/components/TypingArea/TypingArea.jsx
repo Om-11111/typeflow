@@ -1,9 +1,13 @@
 import styles from "./TypingArea.module.css";
 
-function TypingArea() {
+function TypingArea({ typedText, onTyping }) {
   return (
     <section className={styles.typingArea}>
-      Click anywhere and start typing...
+      <textarea
+        value={typedText}
+        onChange={(event) => onTyping(event.target.value)}
+        placeholder="Start typing..."
+      />
     </section>
   );
 }

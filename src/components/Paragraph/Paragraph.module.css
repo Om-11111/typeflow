@@ -1,0 +1,29 @@
+.paragraph {
+  font-size: 1.45rem;
+  line-height: 2.2rem;
+  color: var(--text-secondary);
+}
+
+.paragraph p {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2px;
+}
+
+.paragraph span {
+  white-space: pre;
+}
+
+.currentCharacter {
+  background: var(--primary);
+  color: white;
+  border-radius: 4px;
+}
+
+.correctCharacter {
+  color: var(--success);
+}
+
+.incorrectCharacter {
+  color: var(--error);
+}

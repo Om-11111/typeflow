@@ -1,0 +1,13 @@
+.statistics {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.statistics p {
+  flex: 1;
+  text-align: center;
+  background: var(--surface);
+  padding: 18px;
+  border-radius: var(--radius);
+}

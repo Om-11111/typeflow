@@ -1,0 +1,16 @@
+.typingArea textarea {
+  width: 100%;
+  min-height: 150px;
+  padding: 20px;
+
+  border: none;
+  outline: none;
+  resize: none;
+
+  border-radius: var(--radius);
+
+  background: var(--surface);
+  color: var(--text-primary);
+
+  font-size: 1.2rem;
+}

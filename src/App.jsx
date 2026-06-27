@@ -1,11 +1,16 @@
 import { useEffect, useState } from "react";
-import calculateCorrectCharacters from "./utils/calculateCorrectCharacters";
+
 import Header from "./components/Header/Header";
 import Paragraph from "./components/Paragraph/Paragraph";
 import TypingArea from "./components/TypingArea/TypingArea";
 import RestartButton from "./components/RestartButton/RestartButton";
 
 import { getRandomParagraph } from "./services/paragraphService";
+
+import calculateCorrectCharacters from "./utils/calculateCorrectCharacters";
+import calculateWPM from "./utils/calculateWPM";
+
+import Statistics from "./components/Statistics/Statistics";
 
 function App() {
   const [paragraph] = useState(() => getRandomParagraph());
@@ -17,6 +22,7 @@ function App() {
   const [isTimerRunning, setIsTimerRunning] = useState(false);
 
   const [correctCharacters, setCorrectCharacters] = useState(0);
+  const [wpm, setWpm] = useState(0);
 
   function handleTyping(value) {
     if (!isTimerRunning && value.length === 1) {
@@ -26,10 +32,11 @@ function App() {
     setTypedText(value);
 
     setCorrectCharacters(
-    calculateCorrectCharacters(value, paragraph)
-);
+      calculateCorrectCharacters(value, paragraph)
+    );
   }
 
+  // Timer
   useEffect(() => {
     if (!isTimerRunning) {
       return;
@@ -50,6 +57,13 @@ function App() {
     return () => clearInterval(timer);
   }, [isTimerRunning]);
 
+  // Live WPM Calculation
+  useEffect(() => {
+    setWpm(
+      calculateWPM(correctCharacters, timeLeft)
+    );
+  }, [correctCharacters, timeLeft]);
+
   return (
     <main className="app">
       <div className="container">
@@ -66,8 +80,10 @@ function App() {
           onTyping={handleTyping}
         />
 
-        {/* Temporary Debug */}
-        <p>Correct Characters: {correctCharacters}</p>
+        <Statistics
+    wpm={wpm}
+    correctCharacters={correctCharacters}
+/>
 
         <RestartButton />
       </div>

@@ -1,12 +1,17 @@
 import styles from "./Statistics.module.css";
 
-function Statistics() {
+function Statistics({ wpm, correctCharacters }) {
   return (
     <section className={styles.statistics}>
-      <p>WPM : 0</p>
-      <p>Accuracy : 100%</p>
-      <p>Mistakes : 0</p>
-      <p>Characters : 0 / 500</p>
+      <div className={styles.card}>
+        <h3>WPM</h3>
+        <p>{wpm}</p>
+      </div>
+
+      <div className={styles.card}>
+        <h3>Correct</h3>
+        <p>{correctCharacters}</p>
+      </div>
     </section>
   );
 }

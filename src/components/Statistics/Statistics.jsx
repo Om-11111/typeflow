@@ -1,6 +1,10 @@
 import styles from "./Statistics.module.css";
 
-function Statistics({ wpm, correctCharacters }) {
+function Statistics({
+  wpm,
+  correctCharacters,
+  accuracy,
+}) {
   return (
     <section className={styles.statistics}>
       <div className={styles.card}>
@@ -11,6 +15,11 @@ function Statistics({ wpm, correctCharacters }) {
       <div className={styles.card}>
         <h3>Correct</h3>
         <p>{correctCharacters}</p>
+      </div>
+
+      <div className={styles.card}>
+        <h3>Accuracy</h3>
+        <p>{accuracy}%</p>
       </div>
     </section>
   );

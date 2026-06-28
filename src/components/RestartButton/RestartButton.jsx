@@ -1,9 +1,11 @@
 import styles from "./RestartButton.module.css";
 
-function RestartButton() {
+function RestartButton({ onRestart }) {
   return (
-    <button className={styles.button}
-    disabled>
+    <button
+      className={styles.button}
+      onClick={onRestart}
+    >
       Restart Test
     </button>
   );

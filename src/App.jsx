@@ -11,9 +11,10 @@ import calculateCorrectCharacters from "./utils/calculateCorrectCharacters";
 import calculateWPM from "./utils/calculateWPM";
 
 import Statistics from "./components/Statistics/Statistics";
+import calculateAccuracy from "./utils/calculateAccuracy";
 
 function App() {
-  const [paragraph] = useState(() => getRandomParagraph());
+  const [paragraph, setParagraph] = useState(() => getRandomParagraph());
   const [typedText, setTypedText] = useState("");
 
   const currentIndex = typedText.length;
@@ -24,17 +25,43 @@ function App() {
   const [correctCharacters, setCorrectCharacters] = useState(0);
   const [wpm, setWpm] = useState(0);
 
-  function handleTyping(value) {
-    if (!isTimerRunning && value.length === 1) {
-      setIsTimerRunning(true);
-    }
+  const [accuracy, setAccuracy] = useState(100);
 
-    setTypedText(value);
-
-    setCorrectCharacters(
-      calculateCorrectCharacters(value, paragraph)
-    );
+function handleTyping(value) {
+  // User ko paragraph se zyada type nahi karne dena
+  if (value.length > paragraph.text.length) {
+    return;
   }
+
+  if (!isTimerRunning && value.length === 1) {
+    setIsTimerRunning(true);
+  }
+
+  setTypedText(value);
+
+  setCorrectCharacters(
+    calculateCorrectCharacters(value, paragraph)
+  );
+
+  // Paragraph complete
+  if (value.length === paragraph.text.length) {
+    setIsTimerRunning(false);
+  }
+}
+
+  function handleRestart() {
+  setParagraph(getRandomParagraph());
+
+  setTypedText("");
+
+  setTimeLeft(600);
+
+  setIsTimerRunning(false);
+
+  setCorrectCharacters(0);
+
+  setWpm(0);
+}
 
   // Timer
   useEffect(() => {
@@ -64,6 +91,15 @@ function App() {
     );
   }, [correctCharacters, timeLeft]);
 
+    useEffect(() => {
+  setAccuracy(
+    calculateAccuracy(
+      correctCharacters,
+      typedText.length
+    )
+  );
+}, [correctCharacters, typedText]);
+
   return (
     <main className="app">
       <div className="container">
@@ -83,9 +119,12 @@ function App() {
         <Statistics
     wpm={wpm}
     correctCharacters={correctCharacters}
+    accuracy={accuracy}
 />
 
-        <RestartButton />
+        <RestartButton
+        onRestart={handleRestart}
+        />
       </div>
     </main>
   );
